@@ -1,0 +1,27 @@
+<div class="log" >
+    
+    <div class="colFlexForm">
+        <h2>Login</h2>
+
+        <div class="">
+            <label for="player1name">Red player name :</label>
+            <input type="text" name="player1name" id="player1name" placeholder="Red player name...">
+        </div>
+
+        <div class="">
+            <label for="player2name">Yellow player name :</label>
+            <input type="text" name="player2name" id="player2name" placeholder="Yellow player name...">
+        </div>
+
+        <div class="rowFlex">
+            <label for="nbRound">Select number of round :</label>
+            <select ng-model="$ctrl.nbRound">
+                <option ng-repeat="round in [1,2,3,5]" value="{{round}}">{{round + " round(s)"}}</option>
+            </select>
+        </div>
+
+        <button>Start</button>
+
+    </div>
+
+</div>

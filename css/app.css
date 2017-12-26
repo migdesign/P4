@@ -1,0 +1,10 @@
+body{
+    font-family: sans-serif;
+}
+.rowFlex{
+    display: flex;
+    flex-direction: row;
+}
+.justify-around{
+    justify-content: space-around;
+}

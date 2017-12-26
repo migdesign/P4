@@ -1,0 +1,19 @@
+td div.red {
+	height: 4em;
+    width: 4em;
+	border-radius: 50%;
+	background: red;
+	margin: auto;
+}
+
+td div.yellow {
+	height: 4em;
+    width: 4em;
+	border-radius: 50%;
+	background: rgb(207, 207, 18);
+	margin: auto;
+}
+
+.cell-content{
+	height: 4em;
+}

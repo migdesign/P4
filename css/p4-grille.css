@@ -1,0 +1,37 @@
+.p4-grille{
+    display: flex;
+    box-shadow: 0 0 .2em .2em rgb(195, 195, 195);
+    padding: 3em 1em;
+    margin-bottom: 2em;
+    justify-content: center;
+    background: rgb(255, 255, 255);
+}
+
+.p4-grille table{
+    border-radius: .5em;
+    padding: 1em;
+    background: blue;
+    border-spacing : .7em;
+    /*border-collapse : collapse;*/
+}
+
+.p4-grille td{
+    border-radius: 50%;
+    height: 4em;
+    width: 4em;
+    border: 2px solid white;
+    background: white;
+    padding: 0;
+    text-align: center;
+    
+}
+
+.p4-grille td div.red:hover, .p4-grille td div.red:focus,.p4-grille td div.red:active{
+    box-shadow: 0 0 .5em .5em red;
+    cursor: pointer;
+}
+
+.p4-grille td div.yellow:hover, .p4-grille td div.yellow:focus,.p4-grille td div.yellow:active{
+    box-shadow: 0 0 .5em .5em yellow;
+    cursor: pointer;
+}

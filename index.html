@@ -9,8 +9,52 @@
     <link rel="stylesheet" href="dist/app.min.css">
     
 </head>
-<body>
-	<h1>Puissance 4</h1>
+<body  ng-app="P4" ng-controller="P4Controller as myCtrl">
+
+	<h1>Power4</h1>
+
+	<p4-loggin ng-show="!myCtrl.playing"></p4-loggin>
+
+	<div class="log" ng-show="!myCtrl.playing">
+
+		<div class="colFlexForm">
+			<h2>Login</h2>
+			<label for="player1name">Red player name :</label>
+			<input type="text" name="player1name" id="player1name" placeholder="Write red player name...">
+			<label for="player2name">Yellow player name :</label>
+			<input type="text" name="player2name" id="player2name" placeholder="Write yellow player name...">
+			<div class="rowFlex justify-around">
+				<label for="nbRound">Select number of round :</label>
+				<select ng-model="myCtrl.nbRound">
+					<option ng-repeat="round in myCtrl.listNbRound" value="{{round}}">{{round + " round"}}</option>
+				</select>
+			</div>
+			<button ng-click="myCtrl.start()">Jouer</button>
+		</div>
+
+	</div>
+
+	<div class="infos rowFlex justify-around" ng-show="myCtrl.playing">
+		<div class="player red">
+			<span>Player red</span>
+			<div>score : 1</div>
+		</div>
+		<div class="round">
+				<h1>VS</h1>
+				<h2>round</h2>
+			<div>{{myCtrl.nbRound}}</div>
+		</div>
+		<div class="player yellow">
+			<span>Player yellow</span>
+			<div>score : 2</div>
+		</div>
+	</div>
+
+	<!-- Component p4-grille -->
+	<p4-grille class="p4-grille" playing="myCtrl.playing" ng-show="myCtrl.playing" onStop="myCrtl.dostop()"></p4-grille>
+
 	
+	<button ng-model="myCtrl.playing" ng-show="myCtrl.playing" ng-click="myCtrl.doStop()">Recommencer</button>
+
 </body>
 </html>
