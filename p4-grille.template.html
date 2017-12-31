@@ -1,10 +1,7 @@
 <table>
     <tr ng-repeat="rowIndex in [0,1,2,3,4,5]" >
+        <td class="morpion-cell" ng-repeat="colIndex in [0,1,2,3,4,5,6]" ng-class=$ctrl.currentPlayer.color >
 
-        <td id="{{colIndex}}-{{rowIndex}}" class="morpion-cell" ng-repeat="colIndex in [0,1,2,3,4,5,6]" 
-                ng-class=$ctrl.currentPlayer.color >
-            <!-- {{colIndex}} - {{rowIndex}}  -->
-            <!-- le bindings "currentPlayer" en camel case doit être  -->
             <p4-cell index-row="{{rowIndex}}" index-col="{{ colIndex }}" current-player="$ctrl.currentPlayer" on-choose="$ctrl.doChoose(indexRow,indexCol)">
             </p4-cell>    
 

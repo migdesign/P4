@@ -12,22 +12,28 @@ angular.module('P4').component('p4Cell', {
 
             var ctrl = this;
             
-			ctrl.played = false;//si la cell est jouée
             ctrl.playerClass = '';//class css de la cell
             
 			ctrl.play = () => {
-                if (!ctrl.played) {//si la cell n'est pas jouée
-                
-					ctrl.played = true;//la cell devient jouée
-					ctrl.playerClass = ctrl.currentPlayer.color;//la class css de la cell devient celle du joueur courant
-                    ctrl.onChoose({indexRow: ctrl.indexRow,indexCol:ctrl.indexCol});//la fonction onchoose prend pour parametre indexrow et indexCol
-                
-                    console.log('Cell : '+ ctrl.currentPlayer);
+   
+                for(let row = 5; row > -1; --row ){
 
-                } else {
-                    // console.warn('Impossible de jouer ici...');
-                    alert('Cette cellule a déjà été jouée !');
-				}
+                    let IdDiv = ctrl.indexCol+'-'+row;
+                    //teste si la div n'est ni "red" ni "yellow"
+                    if(!angular.element(document.getElementById(IdDiv)).hasClass('red') && !angular.element(document.getElementById(IdDiv)).hasClass('yellow')){
+                
+                        ctrl.playerClass = ctrl.currentPlayer.color;//la class css de la cell devient celle du joueur courant
+                        ctrl.onChoose({indexRow: row,indexCol:ctrl.indexCol});//la fonction onchoose prend pour parametre indexrow et indexCol
+                        
+                        ctrl.reset();
+                        
+                        angular.element(document.getElementById(IdDiv)).addClass(ctrl.currentPlayer.color);
+                        angular.element(document.getElementById(IdDiv)).html(IdDiv);
+                        break;
+                    }
+
+                }//end for "row"
+ 
             };//end play
             
 			ctrl.reset = () => {
@@ -36,7 +42,7 @@ angular.module('P4').component('p4Cell', {
             };//end reset
             
 			ctrl.$onChanges = (changes) => {
-                console.log('change');
+                // console.log('change');
 				if (changes.currentPlayer.currentValue === '' && changes.currentPlayer.previousValue) {
 					ctrl.reset();
 				}

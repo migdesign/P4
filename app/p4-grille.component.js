@@ -37,15 +37,17 @@ angular.module('P4').component('p4Grille', {
         };
         
         ctrl.doChoose = (indexRow,indexCol) => {
+            let key = indexCol + '-' + indexRow;
+            ctrl.gameData.values[key] = ctrl.currentPlayer.color;
             
-            // ctrl.gameData.values.push({indexCol+'-'+indexRow : "ctrl.currentPlayer"});
-            // ctrl.gameData.value.append(indexCol+'-'+indexRow  ctrl.currentPlayer);
-            console.log(ctrl.gameData.values.length);
+            console.log(ctrl.gameData.values);
+            ctrl.checkRows(indexCol,indexRow);
+            console.log(ctrl.checkRows(indexCol,indexRow));
             // if (!ctrl.checkWin()) {
                 ctrl.gameData.switchPlayer();
                 ctrl.update();
 
-                console.log('Grille : '+ctrl.currentPlayer);
+                // console.log('Grille : '+ctrl.currentPlayer);
             // } else {
             //     ctrl.gameData.status.winner = ctrl.currentPlayer;
             //     ctrl.onStop({status: ctrl.gameData.status});
@@ -97,6 +99,43 @@ angular.module('P4').component('p4Grille', {
                 return false;
             }
         };
+
+        ctrl.checkRows = (idCol,idRow)=>{
+            
+            let p4 = 4;
+            let countAlign = 1;
+
+            idCol = parseInt(idCol);
+            idRow = parseInt(idRow);
+
+            for(let col = idCol + 1; col < (7 - idCol); ++col){
+                
+                if(ctrl.gameData.values[col + '-' + idRow] && ctrl.gameData.values[col + '-' + idRow] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    console.log('count ==> : %s == col : %s',countAlign,col);
+                    if(countAlign === p4)return true;
+                    
+                }else{
+                    countAlign = 1;
+                }
+                
+            }
+
+            // for(let col = idCol - 1; col > (-1 + (6-4)); --col){
+            for(let col = idCol - 1; col > idCol-4; --col){
+                if(ctrl.gameData.values[col + '-' + idRow] && ctrl.gameData.values[col + '-' + idRow] === ctrl.currentPlayer.color){
+                    
+                    ++countAlign;
+                    console.log('count <== : %s == col : %s',countAlign,col);
+                    if(countAlign === p4)return true;
+                   
+                }else{
+                    countAlign = 1;
+                }
+
+            }
+            return false;
+        }
         
         ctrl.started = false;
         
