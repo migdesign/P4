@@ -17,3 +17,10 @@ td div.yellow {
 .cell-content{
 	height: 4em;
 }
+
+.winner-red{
+	transform: scale(1.5);
+}
+.winner-yellow{
+	transform: scale(1.5);
+}

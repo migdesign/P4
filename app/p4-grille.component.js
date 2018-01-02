@@ -16,6 +16,7 @@ angular.module('P4').component('p4Grille', {
             current: 0,
             values: {},
             nbRound:1,
+            countAlign:1,
 
             status: {
                 isDraw: false,
@@ -40,9 +41,19 @@ angular.module('P4').component('p4Grille', {
             let key = indexCol + '-' + indexRow;
             ctrl.gameData.values[key] = ctrl.currentPlayer.color;
             
-            console.log(ctrl.gameData.values);
-            ctrl.checkRows(indexCol,indexRow);
-            console.log(ctrl.checkRows(indexCol,indexRow));
+            // console.log(ctrl.gameData.values);
+            // ctrl.checkRows(indexCol,indexRow);
+            console.log('ROW : %s',ctrl.checkRows(indexCol,indexRow));
+
+            // ctrl.checkColumns(indexCol,indexRow);
+            console.log('COLUMN : %s',ctrl.checkColumns(indexCol,indexRow));
+
+            // ctrl.checkDiagNESW(indexCol,indexRow);
+            console.log('DIAGONALE NE-SW : %s',ctrl.checkDiagNESW(indexCol,indexRow));
+
+            // ctrl.checkDiagNWSE(indexCol,indexRow);
+            console.log('DIAGONALE NW-SE : %s',ctrl.checkDiagNWSE(indexCol,indexRow));
+            
             // if (!ctrl.checkWin()) {
                 ctrl.gameData.switchPlayer();
                 ctrl.update();
@@ -104,39 +115,163 @@ angular.module('P4').component('p4Grille', {
             
             let p4 = 4;
             let countAlign = 1;
+            let listCellWinner=[];
 
             idCol = parseInt(idCol);
             idRow = parseInt(idRow);
 
-            for(let col = idCol + 1; col < (7 - idCol); ++col){
+            listCellWinner.push(idCol + '-' + idRow);
+
+            for(let col = idCol + 1; col < idCol+4; ++col){
                 
                 if(ctrl.gameData.values[col + '-' + idRow] && ctrl.gameData.values[col + '-' + idRow] === ctrl.currentPlayer.color){
                     ++countAlign;
-                    console.log('count ==> : %s == col : %s',countAlign,col);
-                    if(countAlign === p4)return true;
-                    
-                }else{
-                    countAlign = 1;
+                    listCellWinner.push(col + '-' + idRow);
                 }
                 
             }
 
-            // for(let col = idCol - 1; col > (-1 + (6-4)); --col){
             for(let col = idCol - 1; col > idCol-4; --col){
+                
                 if(ctrl.gameData.values[col + '-' + idRow] && ctrl.gameData.values[col + '-' + idRow] === ctrl.currentPlayer.color){
                     
                     ++countAlign;
-                    console.log('count <== : %s == col : %s',countAlign,col);
-                    if(countAlign === p4)return true;
-                   
-                }else{
-                    countAlign = 1;
+                    listCellWinner.push(col + '-' + idRow);
                 }
 
             }
+
+            if(countAlign === p4){
+
+                // console.log('P4 count ==> : %s ',countAlign);
+                return listCellWinner.sort();
+                // console.log(listCellWinner);
+                // return true;
+            }
+            
             return false;
-        }
-        
+        };
+
+        ctrl.checkColumns = (idCol,idRow)=>{
+            
+            let p4 = 4;
+            let countAlign = 1;
+            let listCellWinner=[];
+
+            idCol = parseInt(idCol);
+            idRow = parseInt(idRow);
+
+            listCellWinner.push(idCol + '-' + idRow);
+            //TODO penser à simplifier la fonction car on ne vérifie que dans les sens du haut vers le bas
+            for(let row = idRow + 1; row < idRow+4; ++row){
+                
+                if(ctrl.gameData.values[idCol + '-' + row] && ctrl.gameData.values[idCol + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(idCol + '-' + row);
+                }
+                
+            }
+
+            for(let row = idRow - 1; row > idRow-4; --row){
+                
+                if(ctrl.gameData.values[idCol + '-' + row] && ctrl.gameData.values[idCol + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(idCol + '-' + row);
+                }
+
+            }
+
+            if(countAlign === p4){
+
+                // console.log('P4 count ==> : %s ',countAlign);
+                return listCellWinner.sort();
+                // console.log(listCellWinner);
+                // return true;
+            }
+            
+            return false;
+        };
+
+        ctrl.checkDiagNESW = (idCol,idRow)=>{
+            
+            let p4 = 4;
+            let countAlign = 1;
+            let listCellWinner=[];
+
+            idCol = parseInt(idCol);
+            idRow = parseInt(idRow);
+            //on recupere l'id de la cell qui vient d'être joué
+            listCellWinner.push(idCol + '-' + idRow);
+
+            for(let row = idRow + 1, col = idCol - 1; row < (idRow + 4) && col > (idCol - 4); ++row, --col){
+                
+                if(ctrl.gameData.values[col + '-' + row] && ctrl.gameData.values[col + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(col + '-' + row);
+                }
+                
+            }
+
+            for(let row = idRow - 1, col = idCol + 1; row > (idRow - 4) && col < (idCol + 4); --row, ++col){
+                
+                if(ctrl.gameData.values[col + '-' + row] && ctrl.gameData.values[col + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(col + '-' + row);
+                }
+
+            }
+
+            if(countAlign === p4){
+
+                // console.log('P4 count ==> : %s ',countAlign);
+                return listCellWinner.sort();
+                // console.log(listCellWinner);
+                // return true;
+            }
+            
+            return false;
+        };
+
+        ctrl.checkDiagNWSE = (idCol,idRow)=>{
+            
+            let p4 = 4;
+            let countAlign = 1;
+            let listCellWinner=[];
+
+            idCol = parseInt(idCol);
+            idRow = parseInt(idRow);
+
+            listCellWinner.push(idCol + '-' + idRow);
+
+            for(let row = idRow - 1, col = idCol - 1; row > (idRow - 4) && col > (idCol - 4); --row, --col){
+                
+                if(ctrl.gameData.values[col + '-' + row] && ctrl.gameData.values[col + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(col + '-' + row);
+                }
+                
+            }
+
+            for(let row = idRow + 1, col = idCol + 1; row < (idRow + 4) && col < (idCol + 4); ++row, ++col){
+                
+                if(ctrl.gameData.values[col + '-' + row] && ctrl.gameData.values[col + '-' + row] === ctrl.currentPlayer.color){
+                    ++countAlign;
+                    listCellWinner.push(col + '-' + row);
+                }
+
+            }
+            
+            if(countAlign === p4){
+
+                // console.log('P4 count ==> : %s ',countAlign);
+                return listCellWinner.sort();
+                // console.log(listCellWinner);
+                // return true;
+            }
+            
+            return false;
+        };
+
         ctrl.started = false;
         
         ctrl.$doCheck = () => {
