@@ -15,7 +15,7 @@ angular.module('P4').component('p4Cell', {
             ctrl.playerClass = '';//class css de la cell
             
 			ctrl.play = () => {
-   
+                //permet de placer le jeton à la bonne place
                 for(let row = 5; row > -1; --row ){
 
                     let IdDiv = ctrl.indexCol+'-'+row;
@@ -29,6 +29,7 @@ angular.module('P4').component('p4Cell', {
                         
                         angular.element(document.getElementById(IdDiv)).addClass(ctrl.currentPlayer.color);
                         angular.element(document.getElementById(IdDiv)).html(IdDiv);
+
                         break;
                     }
 

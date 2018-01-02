@@ -38,21 +38,28 @@ angular.module('P4').component('p4Grille', {
         };
         
         ctrl.doChoose = (indexRow,indexCol) => {
+            //création de la clé ID de la cell qui vient d'être joué
             let key = indexCol + '-' + indexRow;
-            ctrl.gameData.values[key] = ctrl.currentPlayer.color;
             
-            // console.log(ctrl.gameData.values);
-            // ctrl.checkRows(indexCol,indexRow);
-            console.log('ROW : %s',ctrl.checkRows(indexCol,indexRow));
+            ctrl.gameData.values[key] = ctrl.currentPlayer.color;
 
-            // ctrl.checkColumns(indexCol,indexRow);
-            console.log('COLUMN : %s',ctrl.checkColumns(indexCol,indexRow));
+            isWinnerCells(ctrl.checkRows(indexCol,indexRow));
+            isWinnerCells(ctrl.checkColumns(indexCol,indexRow));
+            isWinnerCells(ctrl.checkDiagNESW(indexCol,indexRow));
+            isWinnerCells(ctrl.checkDiagNWSE(indexCol,indexRow));
 
-            // ctrl.checkDiagNESW(indexCol,indexRow);
-            console.log('DIAGONALE NE-SW : %s',ctrl.checkDiagNESW(indexCol,indexRow));
+            // listCellWinner = ctrl.checkRows(indexCol,indexRow);
+            // if(Array.isArray(listCellWinner)){
+            //     for(let i = 0 ; i < listCellWinner.length; i++){
+            //         angular.element(document.getElementById(listCellWinner[i])).addClass('winner-'+ctrl.currentPlayer.color);
+            //     }
+            // }
 
-            // ctrl.checkDiagNWSE(indexCol,indexRow);
-            console.log('DIAGONALE NW-SE : %s',ctrl.checkDiagNWSE(indexCol,indexRow));
+            
+            // console.log('ROW : %s',ctrl.checkRows(indexCol,indexRow));
+            // console.log('COLUMN : %s',ctrl.checkColumns(indexCol,indexRow));
+            // console.log('DIAGONALE NE-SW : %s',ctrl.checkDiagNESW(indexCol,indexRow));
+            // console.log('DIAGONALE NW-SE : %s',ctrl.checkDiagNWSE(indexCol,indexRow));
             
             // if (!ctrl.checkWin()) {
                 ctrl.gameData.switchPlayer();
@@ -67,6 +74,14 @@ angular.module('P4').component('p4Grille', {
             // }
         };
         
+        let isWinnerCells = (listCellWinner) =>{
+            if(Array.isArray(listCellWinner)){
+                for(let i = 0 ; i < listCellWinner.length; i++){
+                    angular.element(document.getElementById(listCellWinner[i])).addClass('winner-'+ctrl.currentPlayer.color);
+                }
+            }
+        }
+
         let checkCase = (c1, c2, c3) => {
             return c1 ? c1 === c2 && c1 === c3 : false;
         };

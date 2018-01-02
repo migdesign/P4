@@ -19,8 +19,17 @@ td div.yellow {
 }
 
 .winner-red{
-	transform: scale(1.5);
+	box-shadow: 0 0 .5em .5em red;
+	animation: Test 1s infinite;
 }
+
 .winner-yellow{
-	transform: scale(1.5);
+	box-shadow: 0 0 .5em .5em yellow;
+	animation: Test 1s infinite;
+}
+
+@keyframes Test{
+    0%{opacity: 1;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
 }
